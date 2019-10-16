@@ -131,7 +131,8 @@ public class AddCommandParserTest {
             Name.MESSAGE_CONSTRAINTS);
 
         // non-empty preamble
-        assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_RUM + AMOUNT_DESC_RUM + CURRENCY_DESC_RUM + DATE_DESC_RUM
+        assertParseFailure(parser,
+            PREAMBLE_NON_EMPTY + NAME_DESC_RUM + AMOUNT_DESC_RUM + CURRENCY_DESC_RUM + DATE_DESC_RUM
                 + TAG_DESC_ALCOHOL + TAG_DESC_DRINKS,
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
