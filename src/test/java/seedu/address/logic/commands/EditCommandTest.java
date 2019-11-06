@@ -12,8 +12,8 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showExpenseAtIndex;
 import static seedu.address.testutil.TypicalExpenses.getTypicalExchangeData;
 import static seedu.address.testutil.TypicalExpenses.getTypicalExpenseList;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EXPENSE;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_EXPENSE;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ITEM;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ITEM;
 
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +42,7 @@ public class EditCommandTest {
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Expense editedExpense = new ExpenseBuilder().build();
         EditExpenseDescriptor descriptor = new EditExpenseDescriptorBuilder(editedExpense).build();
-        EditCommand editCommand = new EditCommand(INDEX_FIRST_EXPENSE, descriptor);
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_ITEM, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_EXPENSE_SUCCESS, editedExpense);
 
@@ -80,8 +80,8 @@ public class EditCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditCommand editCommand = new EditCommand(INDEX_FIRST_EXPENSE, new EditExpenseDescriptor());
-        Expense editedExpense = model.getFilteredExpenseList().get(INDEX_FIRST_EXPENSE.getZeroBased());
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_ITEM, new EditExpenseDescriptor());
+        Expense editedExpense = model.getFilteredExpenseList().get(INDEX_FIRST_ITEM.getZeroBased());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_EXPENSE_SUCCESS, editedExpense);
 
@@ -91,40 +91,40 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
-    //    @Test
-    //    public void execute_filteredList_success() {
-    //        showExpenseAtIndex(model, INDEX_FIRST_EXPENSE);
-    //
-    //        Expense expenseInFilteredList = model.getFilteredExpenseList().get(INDEX_FIRST_EXPENSE.getZeroBased());
-    //        Expense editedExpense = new ExpenseBuilder(expenseInFilteredList).withName(VALID_NAME_RUM).build();
-    //        EditCommand editCommand = new EditCommand(INDEX_FIRST_EXPENSE,
-    //                new EditExpenseDescriptorBuilder().withName(VALID_NAME_RUM).build());
-    //
-    //        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_EXPENSE_SUCCESS, editedExpense);
-    //
-    //        Model expectedModel = new ModelManager(new ExpenseList(model.getExpenseList()),
-    //            new BudgetList(), new UserPrefs());
-    //        expectedModel.setExpense(model.getFilteredExpenseList().get(0), editedExpense);
-    //
-    //        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    //    }
+//        @Test
+//        public void execute_filteredList_success() {
+//            showExpenseAtIndex(model, INDEX_FIRST_ITEM);
+//
+//            Expense expenseInFilteredList = model.getFilteredExpenseList().get(INDEX_FIRST_ITEM.getZeroBased());
+//            Expense editedExpense = new ExpenseBuilder(expenseInFilteredList).withName(VALID_NAME_RUM).build();
+//            EditCommand editCommand = new EditCommand(INDEX_FIRST_ITEM,
+//                    new EditExpenseDescriptorBuilder().withName(VALID_NAME_RUM).build());
+//
+//            String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_EXPENSE_SUCCESS, editedExpense);
+//
+//            Model expectedModel = new ModelManager(new ExpenseList(model.getExpenseList()),
+//                new BudgetList(), new UserPrefs());
+//            expectedModel.setExpense(model.getFilteredExpenseList().get(0), editedExpense);
+//
+//            assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+//        }
 
     @Test
     public void execute_duplicateExpenseUnfilteredList_failure() {
-        Expense firstExpense = model.getFilteredExpenseList().get(INDEX_FIRST_EXPENSE.getZeroBased());
+        Expense firstExpense = model.getFilteredExpenseList().get(INDEX_FIRST_ITEM.getZeroBased());
         EditExpenseDescriptor descriptor = new EditExpenseDescriptorBuilder(firstExpense).build();
-        EditCommand editCommand = new EditCommand(INDEX_SECOND_EXPENSE, descriptor);
+        EditCommand editCommand = new EditCommand(INDEX_SECOND_ITEM, descriptor);
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_EXPENSE);
     }
 
     @Test
     public void execute_duplicateExpenseFilteredList_failure() {
-        showExpenseAtIndex(model, INDEX_FIRST_EXPENSE);
+        showExpenseAtIndex(model, INDEX_FIRST_ITEM);
 
         // edit expense in filtered list into a duplicate in expense list
-        Expense expenseInList = model.getExpenseList().getExpenseList().get(INDEX_SECOND_EXPENSE.getZeroBased());
-        EditCommand editCommand = new EditCommand(INDEX_FIRST_EXPENSE,
+        Expense expenseInList = model.getExpenseList().getExpenseList().get(INDEX_SECOND_ITEM.getZeroBased());
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_ITEM,
                 new EditExpenseDescriptorBuilder(expenseInList).build());
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_EXPENSE);
@@ -145,8 +145,8 @@ public class EditCommandTest {
      */
     @Test
     public void execute_invalidExpenseIndexFilteredList_failure() {
-        showExpenseAtIndex(model, INDEX_FIRST_EXPENSE);
-        Index outOfBoundIndex = INDEX_SECOND_EXPENSE;
+        showExpenseAtIndex(model, INDEX_FIRST_ITEM);
+        Index outOfBoundIndex = INDEX_SECOND_ITEM;
         // ensures that outOfBoundIndex is still in bounds of expense list list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getExpenseList().getExpenseList().size());
 
@@ -158,11 +158,11 @@ public class EditCommandTest {
 
     @Test
     public void equals() {
-        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_EXPENSE, DESC_VODKA);
+        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_ITEM, DESC_VODKA);
 
         // same values -> returns true
         EditExpenseDescriptor copyDescriptor = new EditExpenseDescriptor(DESC_VODKA);
-        EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_EXPENSE, copyDescriptor);
+        EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_ITEM, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -175,10 +175,10 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_EXPENSE, DESC_VODKA)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_ITEM, DESC_VODKA)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_EXPENSE, DESC_RUM)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_ITEM, DESC_RUM)));
     }
 
 }
