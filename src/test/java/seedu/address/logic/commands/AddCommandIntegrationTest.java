@@ -36,6 +36,7 @@ public class AddCommandIntegrationTest {
 
         Model expectedModel = new ModelManager(model.getExpenseList(), model.getBudgetList(),
             model.getExchangeData(), new UserPrefs());
+
         expectedModel.addExpense(validExpense);
 
         assertCommandSuccess(new AddExpenseCommand(validExpense), model,

@@ -15,9 +15,9 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.budget.BudgetList;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for ListDefaultExpensesCommand.
  */
-public class ListCommandTest {
+public class ListDefaultExpensesCommandTest {
 
     private Model model;
     private Model expectedModel;
@@ -32,12 +32,12 @@ public class ListCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ListDefaultExpensesCommand(), model, ListDefaultExpensesCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
         showExpenseAtIndex(model, INDEX_FIRST_ITEM);
-        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ListDefaultExpensesCommand(), model, ListDefaultExpensesCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }
