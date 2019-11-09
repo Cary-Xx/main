@@ -14,10 +14,11 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.budget.Budget;
 import seedu.address.model.expense.Expense;
+import seedu.address.testutil.BudgetBuilder;
 import seedu.address.testutil.ExpenseBuilder;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code AddCommand}.
+ * Contains integration tests (interaction with the Model) for {@code AddExpenseCommand} and {@code AddBudgetCommand}.
  */
 public class AddCommandIntegrationTest {
 
@@ -37,22 +38,31 @@ public class AddCommandIntegrationTest {
             model.getExchangeData(), new UserPrefs());
         expectedModel.addExpense(validExpense);
 
-        assertCommandSuccess(new AddCommand(validExpense), model,
-            String.format(AddCommand.MESSAGE_SUCCESS, validExpense), expectedModel);
+        assertCommandSuccess(new AddExpenseCommand(validExpense), model,
+                String.format(AddExpenseCommand.MESSAGE_SUCCESS, validExpense), expectedModel);
     }
 
     @Test
     public void execute_duplicateExpense_throwsCommandException() {
         Expense expenseInList = model.getExpenseList().getExpenseList().get(0);
-        assertCommandFailure(new AddCommand(expenseInList), model, AddCommand.MESSAGE_DUPLICATE_EXPENSE);
+        assertCommandFailure(new AddExpenseCommand(expenseInList), model, AddExpenseCommand.MESSAGE_DUPLICATE_EXPENSE);
     }
 
-    //
+    @Test
+    public void execute_newBudget_success() {
+        Budget validBudget = new BudgetBuilder().build();
+
+        Model expectedModel = new ModelManager(getTypicalExpenseList(), model.getBudgetList(), new UserPrefs());
+        expectedModel.addBudget(validBudget);
+
+        assertCommandSuccess(new AddBudgetCommand(validBudget), model,
+                String.format(AddBudgetCommand.MESSAGE_SUCCESS, validBudget), expectedModel);
+    }
 
     @Test
-    public void execute_clashBudget_throwsCommandException() {
+    public void execute_duplicateBudget_throwsCommandException() {
         Budget budgetInList = model.getBudgetList().getBudgetList().get(0);
-        assertCommandFailure(new AddBudgetCommand(budgetInList), model, AddBudgetCommand.MESSAGE_BUDGET_CLASH);
+        assertCommandFailure(new AddBudgetCommand(budgetInList), model, AddBudgetCommand.MESSAGE_DUPLICATE_BUDGET);
     }
 
 }
