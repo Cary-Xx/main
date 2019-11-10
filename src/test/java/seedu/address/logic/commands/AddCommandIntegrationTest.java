@@ -34,13 +34,13 @@ public class AddCommandIntegrationTest {
     public void execute_newExpense_success() {
         Expense validExpense = new ExpenseBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getExpenseList(), model.getBudgetList(),
+        Model expectedModel = new ModelManager(model.getExpenseList(), getTypicalBudgetList(),
             model.getExchangeData(), new UserPrefs());
 
         expectedModel.addExpense(validExpense);
 
         assertCommandSuccess(new AddExpenseCommand(validExpense), model,
-                String.format(AddExpenseCommand.MESSAGE_SUCCESS, validExpense), expectedModel);
+            String.format(AddExpenseCommand.MESSAGE_SUCCESS, validExpense), expectedModel);
     }
 
     @Test
@@ -53,11 +53,12 @@ public class AddCommandIntegrationTest {
     public void execute_newBudget_success() {
         Budget validBudget = new BudgetBuilder().build();
 
-        Model expectedModel = new ModelManager(getTypicalExpenseList(), model.getBudgetList(), new UserPrefs());
+        Model expectedModel = new ModelManager(getTypicalExpenseList(), model.getBudgetList(),
+            model.getExchangeData(), new UserPrefs());
         expectedModel.addBudget(validBudget);
 
         assertCommandSuccess(new AddBudgetCommand(validBudget), model,
-                String.format(AddBudgetCommand.MESSAGE_SUCCESS, validBudget), expectedModel);
+            String.format(AddBudgetCommand.MESSAGE_SUCCESS, validBudget), expectedModel);
     }
 
     @Test
@@ -65,5 +66,4 @@ public class AddCommandIntegrationTest {
         Budget budgetInList = model.getBudgetList().getBudgetList().get(0);
         assertCommandFailure(new AddBudgetCommand(budgetInList), model, AddBudgetCommand.MESSAGE_DUPLICATE_BUDGET);
     }
-
 }

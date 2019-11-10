@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalBudgets.getTypicalBudgetList;
 import static seedu.address.testutil.TypicalExpenses.getTypicalExchangeData;
 import static seedu.address.testutil.TypicalExpenses.getTypicalExpenseList;
-import static seedu.address.testutil.TypicalBudgets.getTypicalBudgetList;
 
 import org.junit.jupiter.api.Test;
 
@@ -46,12 +46,13 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyBudgetList_success() {
-        Model model = new ModelManager(new ExpenseList(), getTypicalBudgetList(), new UserPrefs());
-        Model expectedModel = new ModelManager(new ExpenseList(), getTypicalBudgetList(), new UserPrefs());
+        Model model = new ModelManager(new ExpenseList(), getTypicalBudgetList(), getTypicalExchangeData(),
+            new UserPrefs());
+        Model expectedModel = new ModelManager(new ExpenseList(), getTypicalBudgetList(), getTypicalExchangeData(),
+            new UserPrefs());
         expectedModel.setBudgetList(new BudgetList());
         model.setViewState(ViewState.BUDGETLIST);
         assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_CLEAR_BUDGETS_SUCCESS, expectedModel);
         model.setViewState(ViewState.DEFAULT_EXPENSELIST);
     }
-
 }

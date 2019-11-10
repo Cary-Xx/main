@@ -32,12 +32,14 @@ public class ListDefaultExpensesCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(new ListDefaultExpensesCommand(), model, ListDefaultExpensesCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ListDefaultExpensesCommand(), model,
+            ListDefaultExpensesCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
         showExpenseAtIndex(model, INDEX_FIRST_ITEM);
-        assertCommandSuccess(new ListDefaultExpensesCommand(), model, ListDefaultExpensesCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ListDefaultExpensesCommand(), model, ListDefaultExpensesCommand.MESSAGE_SUCCESS,
+            expectedModel);
     }
 }
