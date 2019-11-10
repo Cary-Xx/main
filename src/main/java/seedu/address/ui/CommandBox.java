@@ -188,7 +188,7 @@ public class CommandBox extends UiPart<Region> {
                 int indexSlash = targetText.lastIndexOf(separatorSlash);
                 String[] terms = null;
                 // Ignore separator
-                if (indexSpace == targetText.length() || indexSlash == targetText.length()) {
+                if (indexSpace == targetText.length() - 1 || indexSlash == targetText.length() - 1) {
                     return;
                 }
                 if (indexSpace > indexSlash) {
